@@ -1,0 +1,26 @@
+<table>
+  <thead>
+    <tr>Name</tr>
+    <tr>Size</tr>
+    <tr>Completed</tr>
+    <tr></tr>
+  </thead>
+<tbody>
+  <% project.tasks.each do |task| %>
+	<tr id="task_<%= task.project_order %>">
+  	  <td class="name"><%= task.title %></td>
+      <td class="size"><%= task.size %></td>
+
+      <% if task.complete? %>
+        <td class="completed"><%= task.completed_at %></td>
+      <% else %>
+          <td><%= link_to "Mark Complete", {controller: :tasks, action: :update, id: task.id, task: {completed: true}}, method: "PATCH", class: "complete_task btn btn-sm" %></td>
+      <% end %>
+      <td>
+  	    <%= link_to "Up", {controller: :tasks, action: :up, id: task.id}, class: "up-button btn btn-sm btn-primary", data: {remote: true} %>      
+  		<%= link_to "Down", {controller: :tasks, action: :down, id: task.id}, class: "down-button btn btn-sm btn-primary", data: {remote: true} %>
+      </td>
+	</tr>
+  <% end %>
+</tbody>
+</table>
